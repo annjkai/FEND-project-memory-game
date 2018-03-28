@@ -1,7 +1,14 @@
 /*
  * Create a list that holds all of your cards
  */
+function getCards() {
+    /*this converts the NodeList into an array. I sourced it from
+    (https://davidwalsh.name/nodelist-array) */
+    const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
+    return cards;
+}
 
+myCards = getCards();
 
 /*
  * Display the cards on the page
@@ -26,6 +33,9 @@ function shuffle(array) {
     return array;
 }
 
+myShuffledCards = shuffle(myCards);
+console.log(myCards);
+
 
 /*
  * set up the event listener for a card. If a card is clicked:
@@ -37,29 +47,30 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
-
+/*function to make each card clickable by selecting the class, looping through the
+array and adding an eventListener to each element*/
 function setCardEvents() {
     const cards = document.querySelectorAll(".card");
+    console.log(cards);
+    console.log(cards[0]);
     for (let i = 0; i < cards.length; i++) {
         cards[i].addEventListener("click", function() {
-            console.log("click!");
+            console.log("click! " + i);
 
-             flipCard()-> add show open classes
-             countClicks() -> adds click to an array
-             isMatch() -> if two cards are shown and card === card, remove open show classes,
-             add match class
-                - removeCardEvents() -> cards with match class have event listeners removed
-                - isNotMatch() -> if two cards are shown and card != card, remove open show classes
-             allMatched() -> if all cards have match class, pop up alert dialog
+            /*this function identifies which card was clicked*/
+            function clickedCard() {
 
-             removeClasses() -> removes open show classes
+            }
+            /*this function will add the open and show classes to cards that were clicked*/
+            function flipCard() {
+
+            }
         });
     }
 }
 
 setCardEvents();
 
-function Flipcard
 /*const clickedCard = document.querySelector(".card");
  clickedCard.addEventListener("click", function(){
      console.log("card was clicked");
