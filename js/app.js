@@ -12,7 +12,8 @@
 
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
-    var currentIndex = array.length, temporaryValue, randomIndex;
+    var currentIndex = array.length,
+        temporaryValue, randomIndex;
 
     while (currentIndex !== 0) {
         randomIndex = Math.floor(Math.random() * currentIndex);
@@ -36,3 +37,34 @@ function shuffle(array) {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
+function setCardEvents() {
+    const cards = document.querySelectorAll(".card");
+    for (let i = 0; i < cards.length; i++) {
+        cards[i].addEventListener("click", function() {
+            console.log("click!");
+
+             flipCard()-> add show open classes
+             countClicks() -> adds click to an array
+             isMatch() -> if two cards are shown and card === card, remove open show classes,
+             add match class
+                - removeCardEvents() -> cards with match class have event listeners removed
+                - isNotMatch() -> if two cards are shown and card != card, remove open show classes
+             allMatched() -> if all cards have match class, pop up alert dialog
+
+             removeClasses() -> removes open show classes
+        });
+    }
+}
+
+setCardEvents();
+
+function Flipcard
+/*const clickedCard = document.querySelector(".card");
+ clickedCard.addEventListener("click", function(){
+     console.log("card was clicked");
+
+     var parent = document.getElementById('parent');
+var child_nodes = parent.childNodes;
+console.log(child_nodes.length); // let's assume "2"
+ });*/
