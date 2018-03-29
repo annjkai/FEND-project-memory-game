@@ -1,14 +1,16 @@
 /*
  * Create a list that holds all of your cards
  */
-function getCards() {
-    /*this converts the NodeList into an array. I sourced it from
-    (https://davidwalsh.name/nodelist-array) */
-    const cards = Array.prototype.slice.call(document.querySelectorAll(".card"));
-    return cards;
-}
 
-myCards = getCards();
+const iconsArray = ["fa fa-diamond", "fa fa-diamond",
+    "fa fa-paper-plane-o", "fa fa-paper-plane-o",
+    "fa fa-anchor", "fa fa-anchor",
+    "fa fa-bolt", "fa fa-bolt",
+    "fa fa-cube", "fa fa-cube",
+    "fa fa-leaf", "fa fa-leaf",
+    "fa fa-bicycle", "fa fa-bicycle",
+    "fa fa-bomb", "fa fa-bomb"
+];
 
 /*
  * Display the cards on the page
@@ -29,12 +31,22 @@ function shuffle(array) {
         array[currentIndex] = array[randomIndex];
         array[randomIndex] = temporaryValue;
     }
-
     return array;
 }
 
-myShuffledCards = shuffle(myCards);
-console.log(myCards);
+/* SOURCE: BORJA MIRALLES
+function startGameBoard() {
+    let card;
+    // Shuffle the game board icons
+    let cardsIconsArr = shuffle(CARDS_ICONS);
+
+    if(elemCard != null && cardsIconsArr != null && (elemCard.length === cardsIconsArr.length)) {
+
+        // Load the card array
+        for(let i = 0; i< cardsIconsArr.length; i++) {
+            // Reset any added classes & add the updated one
+            elemCard[i].className = `${CARD_ICON_BASE_CLASSES} ${cardsIconsArr[i]}`;
+            */
 
 
 /*
@@ -51,31 +63,27 @@ console.log(myCards);
 array and adding an eventListener to each element*/
 function setCardEvents() {
     const cards = document.querySelectorAll(".card");
-    console.log(cards);
-    console.log(cards[0]);
+
+    /*shuffles the array*/
+    myShuffledCards = shuffle(iconsArray);
+
     for (let i = 0; i < cards.length; i++) {
+
+        const test = document.getElementsByClassName("card")[i];
+        const updatedHtml = myShuffledCards[i];
+        test2 = test.querySelector("i").className = updatedHtml;
+
         cards[i].addEventListener("click", function() {
-            console.log("click! " + i);
-
-            /*this function identifies which card was clicked*/
-            function clickedCard() {
-
-            }
-            /*this function will add the open and show classes to cards that were clicked*/
-            function flipCard() {
-
-            }
+            	console.log("click! " + i);
         });
     }
 }
 
+const restartButton = document.getElementsByClassName("restart")[0];
+restartButton.addEventListener("click", function() {
+    setCardEvents();
+    console.log("restart?");
+    /*reset click listeners*/
+});
+
 setCardEvents();
-
-/*const clickedCard = document.querySelector(".card");
- clickedCard.addEventListener("click", function(){
-     console.log("card was clicked");
-
-     var parent = document.getElementById('parent');
-var child_nodes = parent.childNodes;
-console.log(child_nodes.length); // let's assume "2"
- });*/
