@@ -1,7 +1,6 @@
 /*
- * Create a list that holds all of your cards
+ * Array that holds all of the cards
  */
-
 const iconsArray = ["fa fa-diamond", "fa fa-diamond",
     "fa fa-paper-plane-o", "fa fa-paper-plane-o",
     "fa fa-anchor", "fa fa-anchor",
@@ -18,7 +17,6 @@ const iconsArray = ["fa fa-diamond", "fa fa-diamond",
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-
 // Shuffle function from http://stackoverflow.com/a/2450976
 function shuffle(array) {
     var currentIndex = array.length,
@@ -44,8 +42,8 @@ function startGameBoard() {
 
         // Load the card array
         for(let i = 0; i< cardsIconsArr.length; i++) {
-            // Reset any added classes & add the updated one
-            elemCard[i].className = `${CARD_ICON_BASE_CLASSES} ${cardsIconsArr[i]}`;
+            // Reset any added classes & add tShe updated one
+            elemCard[i].className = `${CARD_ICON_BASE_CLASSES} ${ScardsIconsArr[i]}`;
             */
 
 
@@ -59,6 +57,7 @@ function startGameBoard() {
  *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
+
 /*function to make each card clickable by selecting the class, looping through the
 array and adding an eventListener to each element*/
 function setCardEvents() {
@@ -67,18 +66,38 @@ function setCardEvents() {
     /*shuffles the array*/
     myShuffledCards = shuffle(iconsArray);
 
+    /*updates the HTML from the old to the new card so the shuffled array is displayed*/
     for (let i = 0; i < cards.length; i++) {
-
-        const test = document.getElementsByClassName("card")[i];
+        const oldCard = document.getElementsByClassName("card")[i];
         const updatedHtml = myShuffledCards[i];
-        test2 = test.querySelector("i").className = updatedHtml;
+        newCard = oldCard.querySelector("i").className = updatedHtml;
 
+        /*adds an event listener to each card*/
         cards[i].addEventListener("click", function() {
-            	console.log("click! " + i);
+            console.log("click! " + i);
+
+            /*const flippedCard = cards;
+            flippedCard.onclick = console.log("2nd click");
+            flippedCard.classList.toggle("open show");
+            console.log(flippedCard);*/
+
+            const flippedCard = document.getElementsByClassName("card")[i];
+            const addClasses = flippedCard.classList;
+            addClasses.add("open", "show");
+            console.log(flippedCard);
         });
     }
 }
 
+/*this function adds the open & show classes when a card is clicked the first time*/
+function flipCard() {
+    /*    const flippedCard = document.querySelectorAll(".card");
+        flippedCard.onclick =
+    */
+
+}
+
+/*the restart button re-shuffles the card if the user wants to start over*/
 const restartButton = document.getElementsByClassName("restart")[0];
 restartButton.addEventListener("click", function() {
     setCardEvents();
@@ -86,4 +105,5 @@ restartButton.addEventListener("click", function() {
     /*reset click listeners*/
 });
 
+/*runs the function that updates the HTML and sets an event listener*/
 setCardEvents();
