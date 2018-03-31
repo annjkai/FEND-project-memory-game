@@ -97,6 +97,17 @@ function cardEventListener(event) {
     const addClasses = this.classList;
     addClasses.add("open", "show");
 
+    // setting intervals for timer
+    if (isTimerSet != true) {
+        clearInterval(Interval);
+        Interval = setInterval(startTimer, 1000);
+        isTimerSet = true;
+
+        console.log("timer not true");
+
+        startTimer();
+    }
+
     isMatch();
 }
 
@@ -132,7 +143,7 @@ function isMatch() {
         secondCard.classList.add("match");
 
         clickCounter = 0;
-        console.log("match");
+
     } else if (clickCounter === 2) {
         // closes both cards after a delay if they're not a match
         window.setTimeout(function() {
@@ -141,9 +152,16 @@ function isMatch() {
         }, 500);
 
         clickCounter = 0;
-        console.log("no match");
+
     } else {
 
+    }
+
+    // victory condition, stop timer, send alert
+    const allCardsMatched = document.querySelectorAll(".match");
+    if (allCardsMatched.length === 16){
+        clearInterval(Interval);
+        alert("congratz");
     }
 }
 
@@ -161,6 +179,29 @@ restartButton.addEventListener("click", function() {
     setCardEvents();
     console.log("restart?");
 });
+
+
+/* timer, adapted from
+ * https://www.cssscript.com/a-minimal-pure-javascript-stopwatch/
+ */
+let seconds = 0;
+let minutes = 0;
+const appendSeconds = document.getElementsByClassName("time-seconds")[0];
+const appendMinutes = document.getElementsByClassName("time-minutes")[0];
+let Interval;
+let isTimerSet;
+
+function startTimer() {
+    seconds++;
+
+    if (seconds > 59) {
+        minutes++;
+        seconds = 0;
+        appendMinutes.innerHTML = minutes;
+    }
+
+    appendSeconds.innerHTML = seconds;
+}
 
 //runs the function that updates the HTML and sets an event listener
 setCardEvents();

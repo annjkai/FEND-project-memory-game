@@ -1,5 +1,6 @@
 <!doctype html>
 <html lang="en">
+
 <head>
     <meta charset="utf-8">
     <title>Matching Game</title>
@@ -8,6 +9,7 @@
     <link rel="stylesheet prefetch" href="https://fonts.googleapis.com/css?family=Coda|Raleway">
     <link rel="stylesheet" href="css/app.css">
 </head>
+
 <body>
 
     <div class="container">
@@ -16,21 +18,27 @@
         </header>
 
         <section class="score-panel">
-        	<ul class="stars">
+            <ul class="stars">
                 <!--stars go from left to right, class changes to fa-star-o when score is lost-->
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        		<li><i class="fa fa-star"></i></li>
-        	</ul>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star"></i></li>
+            </ul>
 
-        	<span class="moves">3</span> moves
+            <span class="moves">3</span> moves
 
             <div class="restart">
-        		<i class="fa fa-repeat"></i>
-        	</div>
+                <i class="fa fa-repeat"></i>
+            </div>
+
+            <div class="timer">
+                <i class="fa fa-clock-o"></i>
+            </div>
+
+            <span class="time-minutes">0</span> minutes <span class="time-seconds">0</span> seconds
         </section>
 
-<!--classes for the deck:
+        <!--classes for the deck:
     * `open` changes color
     * `show` displays icon
     * `match` changes color again -->
@@ -88,4 +96,5 @@
 
     <script src="js/app.js"></script>
 </body>
+
 </html>
