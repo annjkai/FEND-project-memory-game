@@ -1,5 +1,5 @@
 /*
- * Array that holds all of the cards
+ * Array that holds all of the available card icon classes so they can be assigned or removed
  */
 const iconsArray = ["fa fa-diamond", "fa fa-diamond",
     "fa fa-paper-plane-o", "fa fa-paper-plane-o",
@@ -17,7 +17,9 @@ const iconsArray = ["fa fa-diamond", "fa fa-diamond",
  *   - loop through each card and create its HTML
  *   - add each card's HTML to the page
  */
-// Shuffle function from http://stackoverflow.com/a/2450976
+/* Provided shuffle function from http://stackoverflow.com/a/2450976
+ * The function allows the card icons to be placed randomly across the board
+ */
 function shuffle(array) {
     var currentIndex = array.length,
         temporaryValue, randomIndex;
@@ -58,46 +60,90 @@ function startGameBoard() {
  *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
  */
 
-/*function to make each card clickable by selecting the class, looping through the
-array and adding an eventListener to each element*/
+/* function to make each card clickable by selecting the class, looping through the
+ * array and adding an eventListener to each element
+ */
 function setCardEvents() {
     const cards = document.querySelectorAll(".card");
 
-    /*shuffles the array*/
+    // shuffles the array
     myShuffledCards = shuffle(iconsArray);
 
-    /*updates the HTML from the old to the new card so the shuffled array is displayed*/
-    for (let i = 0; i < cards.length; i++) {
-        const oldCard = document.getElementsByClassName("card")[i];
-        const updatedHtml = myShuffledCards[i];
+    // updates the HTML from the old to the new card so the shuffled array is displayed
+    for (let x = 0; x < cards.length; x++) {
+        const oldCard = document.getElementsByClassName("card")[x];
+        const updatedHtml = myShuffledCards[x];
         newCard = oldCard.querySelector("i").className = updatedHtml;
 
-        /*adds an event listener to each card*/
-        cards[i].addEventListener("click", function() {
-            console.log("click! " + i);
+        // adds an event listener to each card
+        cards[x].addEventListener("click", function() {
+            console.log("click! " + x);
 
-            /*const flippedCard = cards;
-            flippedCard.onclick = console.log("2nd click");
-            flippedCard.classList.toggle("open show");
-            console.log(flippedCard);*/
-
-            const flippedCard = document.getElementsByClassName("card")[i];
+            // adds the classes open and show when the card is clicked
+            const flippedCard = document.getElementsByClassName("card")[x];
             const addClasses = flippedCard.classList;
             addClasses.add("open", "show");
-            console.log(flippedCard);
+
+            // calls the isMatch function to evaluate whether the cards can be classed a pair
+            isMatch();
         });
+    }
+
+    // helper loop to log where each icon is
+    for (let i = 0; i < iconsArray.length; i++) {
+        const item = iconsArray[i];
+        console.log(item);
     }
 }
 
-/*this function adds the open & show classes when a card is clicked the first time*/
-function flipCard() {
-    /*    const flippedCard = document.querySelectorAll(".card");
-        flippedCard.onclick =
-    */
+// counts the clicks
+let clickCounter = 0;
+
+// function to check whether the cards are a pair
+// first evaluate whether both cards are flipped open
+function isMatch() {
+    const openCard = document.getElementsByClassName("open show");
+    console.log(openCard);
+
+    // lets the click counter be updated
+    clickCounter++;
+
+    //accesses the first and second cards as they're clicked
+    const firstCard = openCard[0];
+    /*fix the error - for loop?*/
+    const secondCard = openCard[1];
+
+    /* compares everything about the cards to each other (comparing the node would probably
+     * not be the best solution, but because the whole card will be identical here, it's fine)
+     */
+    const matchedCards = firstCard.isEqualNode(secondCard);
+
+    /* if the cards match, open & show classes are removed, match class is added
+     * if the cards don't match, open & show classes are removed and the cards can be accessed again
+     */
+    if (matchedCards) {
+        firstCard.classList.remove("open", "show");
+        firstCard.classList.add("match");
+        secondCard.classList.remove("open", "show");
+        secondCard.classList.add("match");
+        clickCounter = 0;
+        console.log("match");
+    } else if (clickCounter === 2) {
+        firstCard.classList.remove("open", "show");
+        secondCard.classList.remove("open", "show");
+        clickCounter = 0;
+        /*animation to make 2nd card show*/
+        console.log("no match");
+    } else {
+
+    }
+}
+
+function removeCardEvent(someArg) {
 
 }
 
-/*the restart button re-shuffles the card if the user wants to start over*/
+// the restart button re-shuffles the card if the user wants to start over
 const restartButton = document.getElementsByClassName("restart")[0];
 restartButton.addEventListener("click", function() {
     setCardEvents();
@@ -105,5 +151,5 @@ restartButton.addEventListener("click", function() {
     /*reset click listeners*/
 });
 
-/*runs the function that updates the HTML and sets an event listener*/
+//runs the function that updates the HTML and sets an event listener
 setCardEvents();
