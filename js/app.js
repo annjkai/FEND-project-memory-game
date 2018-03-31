@@ -73,26 +73,11 @@ function setCardEvents() {
 
     // updates the HTML from the old to the new card so the shuffled array is displayed
     for (let x = 0; x < cards.length; x++) {
-        const thing = x;
         const oldCard = document.getElementsByClassName("card")[x];
         const updatedHtml = myShuffledCards[x];
         newCard = oldCard.querySelector("i").className = updatedHtml;
 
-
-        //adds an event listener to each card
-        cards[x].addEventListener("click", function () {
-            console.log("click! " + x);
-
-            // adds the classes open and show when the card is clicked
-            const flippedCard = document.getElementsByClassName("card")[x];
-            const addClasses = flippedCard.classList;
-            addClasses.add("open", "show");
-
-
-            // calls the isMatch function to evaluate whether the cards can be classed a pair
-            isMatch();
-        });
-    }
+        cards[x].addEventListener("click", cardEventListener);
 
     // helper loop to log where each icon is
     for (let i = 0; i < iconsArray.length; i++) {
@@ -100,17 +85,14 @@ function setCardEvents() {
         console.log(item);
     }
 }
-/*
-function cardClickListener (cardInt) {
-    // adds the classes open and show when the card is clicked
-    const flippedCard = document.getElementsByClassName("card")[cardInt];
-    const addClasses = flippedCard.classList;
+
+function cardEventListener(event) {
+    const addClasses = this.classList;
     addClasses.add("open", "show");
 
-    // calls the isMatch function to evaluate whether the cards can be classed a pair
     isMatch();
 }
-*/
+
 // counts the clicks
 let clickCounter = 0;
 
@@ -152,7 +134,6 @@ function isMatch() {
             secondCard.classList.remove("open", "show");
         }, 500);
 
-
         clickCounter = 0;
         console.log("no match");
     } else {
@@ -160,13 +141,16 @@ function isMatch() {
     }
 }
 
-function removeCardEvent(someArg) {
-
-}
-
 // the restart button re-shuffles the card if the user wants to start over
 const restartButton = document.getElementsByClassName("restart")[0];
+
 restartButton.addEventListener("click", function() {
+    for (let x = 0; x < cards.length; x++) {
+        const unflippedCard = document.getElementsByClassName("card")[x];
+        const removedClass = unflippedCard.classList;
+        removedClass.remove("match");
+        cards[x].removeEventListener("click", cardEventListener);
+    }
     setCardEvents();
     console.log("restart?");
     /*reset click listeners*/
