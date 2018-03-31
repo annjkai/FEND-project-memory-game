@@ -11,6 +11,8 @@ const iconsArray = ["fa fa-diamond", "fa fa-diamond",
     "fa fa-bomb", "fa fa-bomb"
 ];
 
+const cards = document.querySelectorAll(".card");
+
 /*
  * Display the cards on the page
  *   - shuffle the list of cards using the provided "shuffle" method below
@@ -64,25 +66,28 @@ function startGameBoard() {
  * array and adding an eventListener to each element
  */
 function setCardEvents() {
-    const cards = document.querySelectorAll(".card");
+    //const cards = document.querySelectorAll(".card");
 
     // shuffles the array
     myShuffledCards = shuffle(iconsArray);
 
     // updates the HTML from the old to the new card so the shuffled array is displayed
     for (let x = 0; x < cards.length; x++) {
+        const thing = x;
         const oldCard = document.getElementsByClassName("card")[x];
         const updatedHtml = myShuffledCards[x];
         newCard = oldCard.querySelector("i").className = updatedHtml;
 
-        // adds an event listener to each card
-        cards[x].addEventListener("click", function() {
+
+        //adds an event listener to each card
+        cards[x].addEventListener("click", function () {
             console.log("click! " + x);
 
             // adds the classes open and show when the card is clicked
             const flippedCard = document.getElementsByClassName("card")[x];
             const addClasses = flippedCard.classList;
             addClasses.add("open", "show");
+
 
             // calls the isMatch function to evaluate whether the cards can be classed a pair
             isMatch();
@@ -95,7 +100,17 @@ function setCardEvents() {
         console.log(item);
     }
 }
+/*
+function cardClickListener (cardInt) {
+    // adds the classes open and show when the card is clicked
+    const flippedCard = document.getElementsByClassName("card")[cardInt];
+    const addClasses = flippedCard.classList;
+    addClasses.add("open", "show");
 
+    // calls the isMatch function to evaluate whether the cards can be classed a pair
+    isMatch();
+}
+*/
 // counts the clicks
 let clickCounter = 0;
 
@@ -110,7 +125,6 @@ function isMatch() {
 
     //accesses the first and second cards as they're clicked
     const firstCard = openCard[0];
-    /*fix the error - for loop?*/
     const secondCard = openCard[1];
 
     /* compares everything about the cards to each other (comparing the node would probably
@@ -121,18 +135,25 @@ function isMatch() {
     /* if the cards match, open & show classes are removed, match class is added
      * if the cards don't match, open & show classes are removed and the cards can be accessed again
      */
+
+
     if (matchedCards) {
         firstCard.classList.remove("open", "show");
-        firstCard.classList.add("match");
         secondCard.classList.remove("open", "show");
+        firstCard.classList.add("match");
         secondCard.classList.add("match");
+
         clickCounter = 0;
         console.log("match");
     } else if (clickCounter === 2) {
-        firstCard.classList.remove("open", "show");
-        secondCard.classList.remove("open", "show");
-        clickCounter = 0;
         /*animation to make 2nd card show*/
+        window.setTimeout(function() {
+            firstCard.classList.remove("open", "show");
+            secondCard.classList.remove("open", "show");
+        }, 500);
+
+
+        clickCounter = 0;
         console.log("no match");
     } else {
 
