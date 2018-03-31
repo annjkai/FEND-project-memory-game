@@ -11,7 +11,11 @@ const iconsArray = ["fa fa-diamond", "fa fa-diamond",
     "fa fa-bomb", "fa fa-bomb"
 ];
 
+//selects all cards via their class
 const cards = document.querySelectorAll(".card");
+
+//counts the move via overall clicks
+let moveCounter = 0;
 
 /*
  * Display the cards on the page
@@ -78,12 +82,15 @@ function setCardEvents() {
         newCard = oldCard.querySelector("i").className = updatedHtml;
 
         cards[x].addEventListener("click", cardEventListener);
+    }
+
 
     // helper loop to log where each icon is
     for (let i = 0; i < iconsArray.length; i++) {
         const item = iconsArray[i];
         console.log(item);
     }
+
 }
 
 function cardEventListener(event) {
@@ -115,10 +122,9 @@ function isMatch() {
     const matchedCards = firstCard.isEqualNode(secondCard);
 
     /* if the cards match, open & show classes are removed, match class is added
-     * if the cards don't match, open & show classes are removed and the cards can be accessed again
+     * if the cards don't match, open & show classes are removed and the cards
+     * can be accessed again
      */
-
-
     if (matchedCards) {
         firstCard.classList.remove("open", "show");
         secondCard.classList.remove("open", "show");
@@ -128,7 +134,7 @@ function isMatch() {
         clickCounter = 0;
         console.log("match");
     } else if (clickCounter === 2) {
-        /*animation to make 2nd card show*/
+        // closes both cards after a delay if they're not a match
         window.setTimeout(function() {
             firstCard.classList.remove("open", "show");
             secondCard.classList.remove("open", "show");
@@ -144,6 +150,7 @@ function isMatch() {
 // the restart button re-shuffles the card if the user wants to start over
 const restartButton = document.getElementsByClassName("restart")[0];
 
+//// TODO: fix bug if a card is clicked after all cards are matched
 restartButton.addEventListener("click", function() {
     for (let x = 0; x < cards.length; x++) {
         const unflippedCard = document.getElementsByClassName("card")[x];
@@ -153,7 +160,6 @@ restartButton.addEventListener("click", function() {
     }
     setCardEvents();
     console.log("restart?");
-    /*reset click listeners*/
 });
 
 //runs the function that updates the HTML and sets an event listener
