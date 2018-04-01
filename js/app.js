@@ -159,7 +159,7 @@ function isMatch() {
 
     // victory condition, stop timer, send alert
     const allCardsMatched = document.querySelectorAll(".match");
-    if (allCardsMatched.length === 16){
+    if (allCardsMatched.length === 16) {
         clearInterval(Interval);
         alert("congratz");
     }
@@ -169,6 +169,7 @@ function isMatch() {
 const restartButton = document.getElementsByClassName("restart")[0];
 
 //// TODO: fix bug if a card is clicked after all cards are matched
+//// TODO: reset timer
 restartButton.addEventListener("click", function() {
     for (let x = 0; x < cards.length; x++) {
         const unflippedCard = document.getElementsByClassName("card")[x];
@@ -177,6 +178,21 @@ restartButton.addEventListener("click", function() {
         cards[x].removeEventListener("click", cardEventListener);
     }
     setCardEvents();
+
+    // resets the timer - see source for startTimer() function
+    clearInterval(Interval);
+    seconds = 0;
+    minutes = 0;
+    appendSeconds.innerHTML = seconds;
+    appendMinutes.innerHTML = minutes;
+
+    if (isTimerSet = !true) {
+        //clearInterval(Interval);
+        Interval = setInterval(startTimer, 1000);
+        isTimerSet = true;
+
+        startTimer();
+    }
     console.log("restart?");
 });
 
