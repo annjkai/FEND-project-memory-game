@@ -30,21 +30,6 @@ function shuffle(array) {
     return array;
 }
 
-/* SOURCE: BORJA MIRALLES
-function startGameBoard() {
-    let card;
-    // Shuffle the game board icons
-    let cardsIconsArr = shuffle(CARDS_ICONS);
-
-    if(elemCard != null && cardsIconsArr != null && (elemCard.length === cardsIconsArr.length)) {
-
-        // Load the card array
-        for(let i = 0; i< cardsIconsArr.length; i++) {
-            // Reset any added classes & add tShe updated one
-            elemCard[i].className = `${CARD_ICON_BASE_CLASSES} ${ScardsIconsArr[i]}`;
-            */
-
-
 /*
  * set up the event listener for a card. If a card is clicked:
  *  - display the card's symbol (put this functionality in another function that you call from this one)
@@ -78,7 +63,6 @@ function setCardEvents() {
         const item = iconsArray[i];
         console.log(item);
     }
-
 }
 
 function cardEventListener(event) {
@@ -108,7 +92,6 @@ let clickCounter = 0;
 function isMatch() {
     const openCard = document.getElementsByClassName("open show");
 
-    // lets the click counter be updated
     clickCounter++;
 
     //accesses the first and second cards as they're clicked
@@ -116,8 +99,7 @@ function isMatch() {
     const secondCard = openCard[1];
 
     /* compares everything about the cards to each other (comparing the node would
-     * probablynot be the best solution, but because the whole card will be
-     * identical here, it's fine)
+     * probably not be the best solution in the wild, but because the whole card  * will be identical here, I think it's fine)
      */
     const matchedCards = firstCard.isEqualNode(secondCard);
 
@@ -133,6 +115,9 @@ function isMatch() {
 
         clickCounter = 0;
 
+        moves++;
+        console.log(moves + " moves/match");
+
     } else if (clickCounter === 2) {
         // closes both cards after a delay if they're not a match
         window.setTimeout(function() {
@@ -142,11 +127,16 @@ function isMatch() {
 
         clickCounter = 0;
 
-    } else {
+        moves++;
+        console.log(moves + " moves/no match");
 
+    } else {
+        //// TODO: figure this out
     }
 
-    // victory condition, stop timer, send alert
+    /* victory condition which stops the timer and pops open a modal that
+     * displays the player's stats
+     */
     //// TODO: finish
     const allCardsMatched = document.querySelectorAll(".match");
     if (allCardsMatched.length === 16) {
@@ -172,22 +162,29 @@ restartButton.addEventListener("click", function restartGame() {
     clearInterval(Interval);
     seconds = 0;
     minutes = 0;
+    moves = 0;
     appendSeconds.innerHTML = seconds;
     appendMinutes.innerHTML = minutes;
+    appendMoves.innerHTML = minutes;
 
     isTimerSet = false;
 });
 
-
-/* timer, adapted from
+// SCORE
+/* timer adapted from
  * https://www.cssscript.com/a-minimal-pure-javascript-stopwatch/
  */
 let seconds = 0;
 let minutes = 0;
-const appendSeconds = document.getElementsByClassName("time-seconds")[0];
-const appendMinutes = document.getElementsByClassName("time-minutes")[0];
+let moves = 0;
 let Interval;
 let isTimerSet = false;
+const appendSeconds = document.getElementsByClassName("time-seconds")[0];
+const appendMinutes = document.getElementsByClassName("time-minutes")[0];
+const appendMoves = document.getElementsByClassName("moves")[0];
+const starOne = document.getElementById("star-one");
+const starTwo = document.getElementById("star-two");
+const starThree = document.getElementById("star-three");
 
 function startTimer() {
     seconds++;
@@ -198,27 +195,32 @@ function startTimer() {
         appendMinutes.innerHTML = minutes;
     }
     appendSeconds.innerHTML = seconds;
+    appendMoves.innerHTML = moves;
+
+    if (moves <= 10) {
+        // 3 stars
+        console.log("3 stars");
+    } else if (moves <= 15) {
+        // 2 stars
+        starThree.classList.remove("fa-star");
+        starThree.classList.add("fa-star-o");
+        console.log("2 stars");
+    } else {
+        // 1 star
+        starTwo.classList.remove("fa-star");
+        starTwo.classList.add("fa-star-o");
+        console.log("1 star");
+    }
 }
 
-// click counter
-
-// counts the move via overall clicks
-let moves = 0;
-//const cardMoves = document.querySelector(".moves");
-
-/*function cardClicks() {
-    moveCounter++;
-    document.getElementsByClassName("cards").innerHTML = moveCounter;
-    console.log("move counter initialized " + moveCounter);
-}*/
-
-// modal for the victory pop-up
+// MODAL
 const modal = document.getElementsByClassName("modal-container")[0];
 const exitModal = document.getElementsByClassName("close-modal")[0];
 const replayBtn = document.getElementsByClassName("replay-button")[0];
 
 function victoryModal() {
     modal.style.display = "flex";
+
 }
 
 replayBtn.onclick = function() {
@@ -237,16 +239,16 @@ replayBtn.onclick = function() {
     clearInterval(Interval);
     seconds = 0;
     minutes = 0;
+    moves = 0;
     appendSeconds.innerHTML = seconds;
     appendMinutes.innerHTML = minutes;
+    appendMoves.innerHTML = minutes;
 
     isTimerSet = false;
-    console.log("restart");
 }
 
 exitModal.onclick = function() {
     modal.style.display = "none";
 }
 
-//runs the function that updates the HTML and sets an event listener
 setCardEvents();
