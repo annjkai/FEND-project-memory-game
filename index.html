@@ -20,9 +20,9 @@
         <section class="score-panel">
             <ul class="stars">
                 <!--stars go from left to right, class changes to fa-star-o when score is lost-->
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
-                <li><i class="fa fa-star"></i></li>
+                <li><i class="fa fa-star" id="star-one"></i></li>
+                <li><i class="fa fa-star" id="star-two"></i></li>
+                <li><i class="fa fa-star" id="star-three"></i></li>
             </ul>
 
             <span class="moves">0</span> moves
@@ -95,31 +95,27 @@
         </ul>
     </div>
 
-<div class="container modal-container">
-    <div id="modal" class="modal">
-        <div class="modal-box-content">
-            <i class="close-modal fa fa-times-circle-o fa-2x"></i>
-            <h1 class="modal-heading">Congratulations!</h1>
-            <p class="modal-text">You won the game!</p>
-            <p class="modal-text">
-                Moves:
-                <span class="moves modal-text">0</span>
-            </p>
-            <p class="modal-text">
-                Time:
-                <span class="time modal-text">0</span>
-            </p>
-            <p class="modal-text">
-                Stars:
-                <span class="stars modal-text">0</span>
-            </p>
-            <p class="modal-text">
-
-            </p>
-            <span class="replay-button">PLAY AGAIN</span>
+    <div class="container modal-container">
+        <div id="modal" class="modal">
+            <div class="modal-box-content">
+                <i class="close-modal fa fa-times-circle-o fa-2x"></i>
+                <h1 class="modal-heading">Congratulations!</h1>
+                <p class="modal-text">You won the game!</p>
+                <p class="modal-text score-text">SCORE</p>
+                <p class="modal-text">
+                    <span class="modal-moves modal-text">0</span> moves
+                </p>
+                <p class="modal-text">
+                    <span class="modal-time-minutes modal-text">0</span> min
+                    <span class="modal-time-seconds modal-text">0</span> sec
+                </p>
+                <p class="modal-text">
+                    <span class="modal-stars modal-text">-</span>
+                </p>
+                <span class="replay-button">PLAY AGAIN</span>
+            </div>
         </div>
     </div>
-</div>
 
 
     <script src="js/app.js"></script>

@@ -152,6 +152,15 @@ h1 {
     font-size: 1.5em;
 }
 
+.modal-stars li {
+    list-style: none;
+    display: inline-block;
+}
+
+.score-text {
+    font-weight: bold;
+}
+
 .close-modal {
     float: right;
     margin-bottom: 50px;

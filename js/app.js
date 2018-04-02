@@ -76,7 +76,6 @@ function cardEventListener(event) {
         isTimerSet = true;
 
         startTimer();
-        //cardClicks();
     }
 
     isMatch();
@@ -137,11 +136,9 @@ function isMatch() {
     /* victory condition which stops the timer and pops open a modal that
      * displays the player's stats
      */
-    //// TODO: finish
     const allCardsMatched = document.querySelectorAll(".match");
     if (allCardsMatched.length === 16) {
         clearInterval(Interval);
-
         victoryModal();
     }
 }
@@ -166,6 +163,10 @@ restartButton.addEventListener("click", function restartGame() {
     appendSeconds.innerHTML = seconds;
     appendMinutes.innerHTML = minutes;
     appendMoves.innerHTML = minutes;
+    starTwo.classList.remove("fa-star-o");
+    starTwo.classList.add("fa-star");
+    starThree.classList.remove("fa-star-o");
+    starThree.classList.add("fa-star");
 
     isTimerSet = false;
 });
@@ -197,19 +198,16 @@ function startTimer() {
     appendSeconds.innerHTML = seconds;
     appendMoves.innerHTML = moves;
 
-    if (moves <= 10) {
+    if (moves <= 15) {
         // 3 stars
-        console.log("3 stars");
-    } else if (moves <= 15) {
+    } else if (moves <= 20) {
         // 2 stars
         starThree.classList.remove("fa-star");
         starThree.classList.add("fa-star-o");
-        console.log("2 stars");
     } else {
         // 1 star
         starTwo.classList.remove("fa-star");
         starTwo.classList.add("fa-star-o");
-        console.log("1 star");
     }
 }
 
@@ -217,10 +215,18 @@ function startTimer() {
 const modal = document.getElementsByClassName("modal-container")[0];
 const exitModal = document.getElementsByClassName("close-modal")[0];
 const replayBtn = document.getElementsByClassName("replay-button")[0];
+const modalMoves = document.getElementsByClassName("modal-moves")[0];
+const modalTimeMin = document.getElementsByClassName("modal-time-minutes")[0];
+const modalTimeSec = document.getElementsByClassName("modal-time-seconds")[0];
+const modalStars = document.getElementsByClassName("modal-stars")[0];
 
 function victoryModal() {
     modal.style.display = "flex";
 
+    modalMoves.innerHTML = moves;
+    modalTimeMin.innerHTML = minutes;
+    modalTimeSec.innerHTML = seconds;
+    modalStars.innerHTML = document.getElementsByClassName("stars")[0].innerHTML;
 }
 
 replayBtn.onclick = function() {
@@ -243,6 +249,10 @@ replayBtn.onclick = function() {
     appendSeconds.innerHTML = seconds;
     appendMinutes.innerHTML = minutes;
     appendMoves.innerHTML = minutes;
+    starTwo.classList.remove("fa-star-o");
+    starTwo.classList.add("fa-star");
+    starThree.classList.remove("fa-star-o");
+    starThree.classList.add("fa-star");
 
     isTimerSet = false;
 }
