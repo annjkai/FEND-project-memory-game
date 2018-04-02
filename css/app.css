@@ -60,9 +60,6 @@ h1 {
     justify-content: center;
     align-items: center;
     box-shadow: 5px 2px 20px 0 rgba(46, 61, 73, 0.5);
-    /*transform-style: preserve-3d;
-    transition: transform 1s ease;*/
-    /*transition: transform 1s ease 5s;*/
 }
 
 .deck .card.open {
@@ -113,4 +110,67 @@ h1 {
     padding: 0;
     margin: 0 5px 0 5px;
     display: inline-block;
+}
+
+/* Got  some help form W3Schools for this one:
+ * https://www.w3schools.com/howto/howto_css_modals.asp
+ */
+
+.modal {
+    width: 660px;
+    min-height: 680px;
+    display: flex;
+    flex-wrap: wrap;
+    margin: 0 0 3em;
+    position: fixed;
+    z-index: 1;
+    left: 50;
+    top: 0;
+    overflow: auto;
+    align-items: center;
+}
+
+.modal-box-content {
+    /*display: none;*/
+    background: #ffffff url('../img/asanoha-400px.png');
+    margin: 20% auto;
+    padding: 20px;
+    border: 1px solid #2e3d49;
+    border-radius: 8px;
+    width: 80%;
+    text-align: center;
+}
+
+.modal-heading {
+    font-weight: bold;
+}
+
+.modal-text {
+    font-size: 1.5em;
+}
+
+.close-modal {
+    float: right;
+    margin-bottom: 50px;
+}
+
+.close-modal:hover, .close-modal:focus {
+    cursor: pointer;
+    color: #4e5459;
+    text-decoration: none;
+}
+
+.restart-button {
+    font-weight: bold;
+    font-size: 2em;
+    border: 1px solid #2e3d49;
+    border-radius: 8px;
+    padding: 5px;
+    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+}
+
+.restart-button:hover, .restart-button:focus {
+    cursor: pointer;
+    color: #4e5459;
+    text-decoration: none;
 }
