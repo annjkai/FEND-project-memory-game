@@ -14,9 +14,9 @@ html, body {
 }
 
 body {
-    background: #ffffff url('../img/asanoha-400px.png');
     /* Background pattern from Subtle Patterns */
-    font-family: 'Raleway', sans-serif;
+    background: #ffffff url('../img/asanoha-400px.png');
+    font-family: 'Montserrat', sans-serif;
 }
 
 .container {
@@ -28,11 +28,10 @@ body {
 
 h1 {
     font-weight: 300;
+    font-size: 2em;
 }
 
-/*
- * Styles for the deck of cards
- */
+/* Styles for the deck of cards */
 
 .deck {
     width: 660px;
@@ -78,9 +77,7 @@ h1 {
     font-size: 33px;
 }
 
-/*
- * Styles for the Score Panel
- */
+/* Styles for the Score Panel */
 
 .score-panel {
     text-align: left;
@@ -113,8 +110,7 @@ h1 {
 }
 
 /* Got  some help from W3Schools for this one, also in the related HTML & JS:
- * https://www.w3schools.com/howto/howto_css_modals.asp
- */
+ * https://www.w3schools.com/howto/howto_css_modals.asp */
 
 .modal-container {
     display: none;
@@ -144,12 +140,13 @@ h1 {
     text-align: center;
 }
 
-.modal-heading {
-    font-weight: bold;
-}
-
 .modal-text {
     font-size: 1.5em;
+}
+
+.first-text {
+    font-size: 2em;
+    font-weight: bold;
 }
 
 .modal-stars li {
@@ -178,7 +175,7 @@ h1 {
     border: 1px solid #2e3d49;
     border-radius: 8px;
     padding: 5px;
-    background: linear-gradient(160deg, #02ccba 0%, #aa7ecd 100%);
+    background: linear-gradient(160deg, #aa7ecd 0%, #02ccba 100%);
 }
 
 .replay-button:hover, .replay-button:focus {
