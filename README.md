@@ -1,56 +1,12 @@
 # Memory Game Project
 
-## Table of Contents
-
-* [Game Description](#description)
-* [How to Play](#play)
-* [To Do](#todo)
-
 ## Game Description
 
-Description goes here.
+The player must flip 16 randomly placed cards, 2 at a time, to find pairs of cards. The player wins the game once all cards have been matched. The game tracks the player's time and number of moves, and gives the player a number of stars between 1 and 3, based on performance (number of moves, where flipping 2 cards counts as 1 move).
 
-## How to Play
-
-Instructions go here.
-
-## To Do
-
-- Update styling
-    - Background
-    - Gradient
-    - Enlarge card images
-
-## Pseudo-code
-
-For every user click, the game needs to:
-    - react to a click event CHECK
-    - store the click and add it to a counter (numbers array)
-    - "flip" the card to display blue background and icon
-
-For the click array
-    - if the number is <=10, do nothing
-    - if the number is >10 && <=15, turn first star white
-    - if the number is >15, turn first & second star white
-
-For the cards
-    - when the first card is clicked, add classes `show` & `open`
-    - then do nothing (leave card with classes)
-    - when the second card is clicked, add classes `show` & `open`
-    - if the second card matches the first (identical), add class `match` and leave cards displayed
-    -> these cards should be removed from object
-    -> cards "match" when class === class, as in `fa-leaf` === `fa-leaf`
-    - if the second card doesn't match the first, remove classes `show` & `open`
-    - return to previous "click state", treat next pair as first and second
-
-For game
-    - once all cards have been removed from array, display alert screen with  time, stars,
-    message, option to reshuffle
-
-For reshuffle button
-    -reset game board to its original state but with cards randomized across the board
-    - this needs to happen on every load/refresh as well
+This game was built with [Udacity's](https://github.com/udacity/fend-project-memory-game) starter code. I used vanilla JavaScript and further implemented Bootstrap. The functionality was designed to adhere to the [project rubric](https://review.udacity.com/#!/rubrics/591/view).
 
 ## Images
 
-Seigaiha/Japanese Asanoha by [Olga Libby](http://olgalibby.com/), sourced from [Subtle Patterns](www.subtlepatterns.com)
+Background:
+Japanese Asanoha by [Olga Libby](http://olgalibby.com/), sourced from [Subtle Patterns](www.subtlepatterns.com)

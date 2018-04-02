@@ -1,6 +1,4 @@
-/*
- * Array that holds all of the available card icon classes so they can be assigned or removed
- */
+/* Array that holds all of the available card icon classes so they can be assigned or removed */
 const iconsArray = ["fa fa-diamond", "fa fa-diamond",
     "fa fa-paper-plane-o", "fa fa-paper-plane-o",
     "fa fa-anchor", "fa fa-anchor",
@@ -11,11 +9,36 @@ const iconsArray = ["fa fa-diamond", "fa fa-diamond",
     "fa fa-bomb", "fa fa-bomb"
 ];
 
+// ALL CARDS variable
 const cards = document.querySelectorAll(".card");
 
+// RESTART BUTTON variable
+const restartButton = document.getElementsByClassName("restart")[0];
+
+// SCORE variables
+let seconds = 0;
+let minutes = 0;
+let moves = 0;
+let Interval;
+let isTimerSet = false;
+const appendSeconds = document.getElementsByClassName("time-seconds")[0];
+const appendMinutes = document.getElementsByClassName("time-minutes")[0];
+const appendMoves = document.getElementsByClassName("moves")[0];
+const starOne = document.getElementById("star-one");
+const starTwo = document.getElementById("star-two");
+const starThree = document.getElementById("star-three");
+
+// MODAL variables
+const modal = document.getElementsByClassName("modal-container")[0];
+const exitModal = document.getElementsByClassName("close-modal")[0];
+const replayBtn = document.getElementsByClassName("replay-button")[0];
+const modalMoves = document.getElementsByClassName("modal-moves")[0];
+const modalTimeMin = document.getElementsByClassName("modal-time-minutes")[0];
+const modalTimeSec = document.getElementsByClassName("modal-time-seconds")[0];
+const modalStars = document.getElementsByClassName("modal-stars")[0];
+
 /* Provided shuffle function from http://stackoverflow.com/a/2450976
- * The function allows the card icons to be placed randomly across the board
- */
+ * The function allows the card icons to be placed randomly across the board */
 function shuffle(array) {
     var currentIndex = array.length,
         temporaryValue, randomIndex;
@@ -30,25 +53,13 @@ function shuffle(array) {
     return array;
 }
 
-/*
- * set up the event listener for a card. If a card is clicked:
- *  - display the card's symbol (put this functionality in another function that you call from this one)
- *  - add the card to a *list* of "open" cards (put this functionality in another function that you call from this one)
- *  - if the list already has another card, check to see if the two cards match
- *    + if the cards do match, lock the cards in the open position (put this functionality in another function that you call from this one)
- *    + if the cards do not match, remove the cards from the list and hide the card's symbol (put this functionality in another function that you call from this one)
- *    + increment the move counter and display it on the page (put this functionality in another function that you call from this one)
- *    + if all cards have matched, display a message with the final score (put this functionality in another function that you call from this one)
- */
-
 /* function to make each card clickable by selecting the class, looping through the
- * array and adding an eventListener to each element
- */
+ * array and adding an eventListener to each element */
 function setCardEvents() {
     // shuffles the array
     myShuffledCards = shuffle(iconsArray);
 
-    // updates the HTML from the old to the new card so the shuffled array is displayed
+    // updates HTML from the old to the new card so the shuffled array is displayed
     for (let x = 0; x < cards.length; x++) {
         const oldCard = document.getElementsByClassName("card")[x];
         const updatedHtml = myShuffledCards[x];
@@ -57,14 +68,15 @@ function setCardEvents() {
         cards[x].addEventListener("click", cardEventListener);
     }
 
-    // helper loop to log where each icon is
-    //// TODO: remove
+    /* this little helper loop logs where each icon is for testing purposes
+     * activate if you don't want to do the guesswork ;)
     for (let i = 0; i < iconsArray.length; i++) {
         const item = iconsArray[i];
         console.log(item);
-    }
+    } */
 }
 
+// adds an event listener to each card
 function cardEventListener(event) {
     const addClasses = this.classList;
     addClasses.add("open", "show");
@@ -74,20 +86,16 @@ function cardEventListener(event) {
         clearInterval(Interval);
         Interval = setInterval(startTimer, 1000);
         isTimerSet = true;
-
         startTimer();
     }
-
     isMatch();
 }
 
 /* counts the clicks purely for matching - gets reset as soon as its
- * value reaches 2
- */
+ * value reaches 2 */
 let clickCounter = 0;
 
 // function to check whether the cards are a pair
-// first evaluate whether both cards are flipped open
 function isMatch() {
     const openCard = document.getElementsByClassName("open show");
 
@@ -98,14 +106,12 @@ function isMatch() {
     const secondCard = openCard[1];
 
     /* compares everything about the cards to each other (comparing the node would
-     * probably not be the best solution in the wild, but because the whole card  * will be identical here, I think it's fine)
-     */
+     * probably not be the best solution in the wild, but because the whole card  * will be identical here, I think it's fine) */
     const matchedCards = firstCard.isEqualNode(secondCard);
 
     /* if the cards match, open & show classes are removed, match class is added
      * if the cards don't match, open & show classes are removed and the cards
-     * can be accessed again
-     */
+     * can be accessed again */
     if (matchedCards) {
         firstCard.classList.remove("open", "show");
         secondCard.classList.remove("open", "show");
@@ -113,9 +119,7 @@ function isMatch() {
         secondCard.classList.add("match");
 
         clickCounter = 0;
-
         moves++;
-        console.log(moves + " moves/match");
 
     } else if (clickCounter === 2) {
         // closes both cards after a delay if they're not a match
@@ -125,17 +129,14 @@ function isMatch() {
         }, 500);
 
         clickCounter = 0;
-
         moves++;
-        console.log(moves + " moves/no match");
 
     } else {
-        //// TODO: figure this out
+        //// do nothing
     }
 
     /* victory condition which stops the timer and pops open a modal that
-     * displays the player's stats
-     */
+     * displays the player's stats */
     const allCardsMatched = document.querySelectorAll(".match");
     if (allCardsMatched.length === 16) {
         clearInterval(Interval);
@@ -143,9 +144,8 @@ function isMatch() {
     }
 }
 
-// the restart button re-shuffles the card if the user wants to start over
-const restartButton = document.getElementsByClassName("restart")[0];
-
+/* the restart button re-shuffles the card if the user wants to start over
+ * from modal */
 restartButton.addEventListener("click", function restartGame() {
     for (let x = 0; x < cards.length; x++) {
         const unflippedCard = document.getElementsByClassName("card")[x];
@@ -162,7 +162,7 @@ restartButton.addEventListener("click", function restartGame() {
     moves = 0;
     appendSeconds.innerHTML = seconds;
     appendMinutes.innerHTML = minutes;
-    appendMoves.innerHTML = minutes;
+    appendMoves.innerHTML = moves;
     starTwo.classList.remove("fa-star-o");
     starTwo.classList.add("fa-star");
     starThree.classList.remove("fa-star-o");
@@ -171,22 +171,9 @@ restartButton.addEventListener("click", function restartGame() {
     isTimerSet = false;
 });
 
-// SCORE
+// starts timer and appends stars
 /* timer adapted from
- * https://www.cssscript.com/a-minimal-pure-javascript-stopwatch/
- */
-let seconds = 0;
-let minutes = 0;
-let moves = 0;
-let Interval;
-let isTimerSet = false;
-const appendSeconds = document.getElementsByClassName("time-seconds")[0];
-const appendMinutes = document.getElementsByClassName("time-minutes")[0];
-const appendMoves = document.getElementsByClassName("moves")[0];
-const starOne = document.getElementById("star-one");
-const starTwo = document.getElementById("star-two");
-const starThree = document.getElementById("star-three");
-
+ * https://www.cssscript.com/a-minimal-pure-javascript-stopwatch/ */
 function startTimer() {
     seconds++;
 
@@ -199,7 +186,7 @@ function startTimer() {
     appendMoves.innerHTML = moves;
 
     if (moves <= 15) {
-        // 3 stars
+        // 3 stars - do nothing
     } else if (moves <= 20) {
         // 2 stars
         starThree.classList.remove("fa-star");
@@ -212,14 +199,6 @@ function startTimer() {
 }
 
 // MODAL
-const modal = document.getElementsByClassName("modal-container")[0];
-const exitModal = document.getElementsByClassName("close-modal")[0];
-const replayBtn = document.getElementsByClassName("replay-button")[0];
-const modalMoves = document.getElementsByClassName("modal-moves")[0];
-const modalTimeMin = document.getElementsByClassName("modal-time-minutes")[0];
-const modalTimeSec = document.getElementsByClassName("modal-time-seconds")[0];
-const modalStars = document.getElementsByClassName("modal-stars")[0];
-
 function victoryModal() {
     modal.style.display = "flex";
 
@@ -248,7 +227,7 @@ replayBtn.onclick = function() {
     moves = 0;
     appendSeconds.innerHTML = seconds;
     appendMinutes.innerHTML = minutes;
-    appendMoves.innerHTML = minutes;
+    appendMoves.innerHTML = moves;
     starTwo.classList.remove("fa-star-o");
     starTwo.classList.add("fa-star");
     starThree.classList.remove("fa-star-o");

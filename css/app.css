@@ -124,7 +124,6 @@ h1 {
     margin: 0 0 3em;
     position: fixed;
     z-index: 1;
-    left: 50;
     top: 0;
     overflow: auto;
     align-items: center;
