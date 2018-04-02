@@ -11,18 +11,8 @@ const iconsArray = ["fa fa-diamond", "fa fa-diamond",
     "fa fa-bomb", "fa fa-bomb"
 ];
 
-//selects all cards via their class
 const cards = document.querySelectorAll(".card");
 
-//counts the move via overall clicks
-let moveCounter = 0;
-
-/*
- * Display the cards on the page
- *   - shuffle the list of cards using the provided "shuffle" method below
- *   - loop through each card and create its HTML
- *   - add each card's HTML to the page
- */
 /* Provided shuffle function from http://stackoverflow.com/a/2450976
  * The function allows the card icons to be placed randomly across the board
  */
@@ -70,8 +60,6 @@ function startGameBoard() {
  * array and adding an eventListener to each element
  */
 function setCardEvents() {
-    //const cards = document.querySelectorAll(".card");
-
     // shuffles the array
     myShuffledCards = shuffle(iconsArray);
 
@@ -84,8 +72,8 @@ function setCardEvents() {
         cards[x].addEventListener("click", cardEventListener);
     }
 
-
     // helper loop to log where each icon is
+    //// TODO: remove
     for (let i = 0; i < iconsArray.length; i++) {
         const item = iconsArray[i];
         console.log(item);
@@ -103,22 +91,22 @@ function cardEventListener(event) {
         Interval = setInterval(startTimer, 1000);
         isTimerSet = true;
 
-        console.log("timer not true");
-
         startTimer();
+        //cardClicks();
     }
 
     isMatch();
 }
 
-// counts the clicks
+/* counts the clicks purely for matching - gets reset as soon as its
+ * value reaches 2
+ */
 let clickCounter = 0;
 
 // function to check whether the cards are a pair
 // first evaluate whether both cards are flipped open
 function isMatch() {
     const openCard = document.getElementsByClassName("open show");
-    console.log(openCard);
 
     // lets the click counter be updated
     clickCounter++;
@@ -127,8 +115,9 @@ function isMatch() {
     const firstCard = openCard[0];
     const secondCard = openCard[1];
 
-    /* compares everything about the cards to each other (comparing the node would probably
-     * not be the best solution, but because the whole card will be identical here, it's fine)
+    /* compares everything about the cards to each other (comparing the node would
+     * probablynot be the best solution, but because the whole card will be
+     * identical here, it's fine)
      */
     const matchedCards = firstCard.isEqualNode(secondCard);
 
@@ -158,19 +147,19 @@ function isMatch() {
     }
 
     // victory condition, stop timer, send alert
+    //// TODO: finish
     const allCardsMatched = document.querySelectorAll(".match");
     if (allCardsMatched.length === 16) {
         clearInterval(Interval);
-        alert("congratz");
+
+        victoryModal();
     }
 }
 
 // the restart button re-shuffles the card if the user wants to start over
 const restartButton = document.getElementsByClassName("restart")[0];
 
-//// TODO: fix bug if a card is clicked after all cards are matched
-//// TODO: reset timer
-restartButton.addEventListener("click", function() {
+restartButton.addEventListener("click", function restartGame() {
     for (let x = 0; x < cards.length; x++) {
         const unflippedCard = document.getElementsByClassName("card")[x];
         const removedClass = unflippedCard.classList;
@@ -186,14 +175,7 @@ restartButton.addEventListener("click", function() {
     appendSeconds.innerHTML = seconds;
     appendMinutes.innerHTML = minutes;
 
-    if (isTimerSet = !true) {
-        //clearInterval(Interval);
-        Interval = setInterval(startTimer, 1000);
-        isTimerSet = true;
-
-        startTimer();
-    }
-    console.log("restart?");
+    isTimerSet = false;
 });
 
 
@@ -205,7 +187,7 @@ let minutes = 0;
 const appendSeconds = document.getElementsByClassName("time-seconds")[0];
 const appendMinutes = document.getElementsByClassName("time-minutes")[0];
 let Interval;
-let isTimerSet;
+let isTimerSet = false;
 
 function startTimer() {
     seconds++;
@@ -215,8 +197,55 @@ function startTimer() {
         seconds = 0;
         appendMinutes.innerHTML = minutes;
     }
-
     appendSeconds.innerHTML = seconds;
+}
+
+// click counter
+
+// counts the move via overall clicks
+let moves = 0;
+//const cardMoves = document.querySelector(".moves");
+
+/*function cardClicks() {
+    moveCounter++;
+    document.getElementsByClassName("cards").innerHTML = moveCounter;
+    console.log("move counter initialized " + moveCounter);
+}*/
+
+// modal for the victory pop-up
+const modal = document.getElementsByClassName("modal-container")[0];
+const exitModal = document.getElementsByClassName("close-modal")[0];
+const replayBtn = document.getElementsByClassName("replay-button")[0];
+
+function victoryModal() {
+    modal.style.display = "flex";
+}
+
+replayBtn.onclick = function() {
+    modal.style.display = "none";
+
+    //access restart function
+    for (let x = 0; x < cards.length; x++) {
+        const unflippedCard = document.getElementsByClassName("card")[x];
+        const removedClass = unflippedCard.classList;
+        removedClass.remove("match");
+        cards[x].removeEventListener("click", cardEventListener);
+    }
+    setCardEvents();
+
+    // resets the timer - see source for startTimer() function
+    clearInterval(Interval);
+    seconds = 0;
+    minutes = 0;
+    appendSeconds.innerHTML = seconds;
+    appendMinutes.innerHTML = minutes;
+
+    isTimerSet = false;
+    console.log("restart");
+}
+
+exitModal.onclick = function() {
+    modal.style.display = "none";
 }
 
 //runs the function that updates the HTML and sets an event listener
