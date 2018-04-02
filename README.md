@@ -10,3 +10,9 @@ This game was built with [Udacity's](https://github.com/udacity/fend-project-mem
 
 Background:
 Japanese Asanoha by [Olga Libby](http://olgalibby.com/), sourced from [Subtle Patterns](www.subtlepatterns.com)
+
+## To-Do
+
+* Add animations to cards on open, match and non-matched
+* Update the styling
+* Add difficulty levels
