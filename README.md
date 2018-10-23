@@ -4,6 +4,8 @@
 
 **Project acceptance date: 2 April 2018**
 
+**[Live preview](http://annikaiser.com/memory-game/)**
+
 Using the simple Bootstrap starter code, this project required students to build a Memory Game using JavaScript.
 This game was built with [Udacity's](https://github.com/udacity/fend-project-memory-game) starter code. I used vanilla JavaScript and further implemented Bootstrap. The functionality was designed to adhere to the [project rubric](https://review.udacity.com/#!/rubrics/591/view).
 
